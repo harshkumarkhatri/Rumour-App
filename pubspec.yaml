@@ -1,0 +1,49 @@
+name: rumour
+description: "A new Flutter project."
+publish_to: 'none' 
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.9.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  google_fonts: ^6.2.1
+  firebase_core: ^4.2.1
+  cloud_firestore: ^6.1.0
+  shared_preferences: ^2.5.4
+  uuid: ^4.5.2
+  http: ^1.6.0
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  path_provider: ^2.1.5
+  intl: ^0.20.2
+  grouped_list: ^6.0.0
+  auto_size_text: ^3.0.0
+  flutter_local_notifications: ^19.5.0
+  firebase_messaging: ^16.0.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^5.0.0
+  flutter_launcher_icons: ^0.13.1
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/app_logo.png"
+  min_sdk_android: 21
+  adaptive_icon_background: "#111827"
+  adaptive_icon_foreground: "assets/images/app_logo.png" 
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+

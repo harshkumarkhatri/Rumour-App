@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "310926313558",
+    "project_id": "rumour-chat-app-harsh",
+    "storage_bucket": "rumour-chat-app-harsh.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:310926313558:android:ac0717e668304ed91953f7",
+        "android_client_info": {
+          "package_name": "com.example.rumour"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzjTsOJvNmzC2c4O2vYegFOTtahV_gZnc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
