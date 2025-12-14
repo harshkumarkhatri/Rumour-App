@@ -72,6 +72,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   late AnimationController _controller;
   late Animation<double> _fadeAnimation;
   late Animation<Offset> _slideAnimation;
+  final FocusNode _roomCodeFocusNode = FocusNode();
 
   @override
   void initState() {
@@ -94,6 +95,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   @override
   void dispose() {
     _controller.dispose();
+    _roomCodeFocusNode.dispose();
     super.dispose();
   }
 
@@ -254,97 +256,110 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                                 ),
                                 const SizedBox(height: 32),
 
-                                AppCard(
-                                  child: Column(
-                                    children: [
-                                      RoomCodeInput(
-                                        onChanged: (value) {
-                                          setState(() {
-                                            _roomCode = value;
-                                          });
-                                        },
-                                        onCompleted: (value) {
-                                          setState(() {
-                                            _roomCode = value;
-                                          });
-                                          _handleJoin();
-                                        },
-                                      ),
-                                      const SizedBox(height: 24),
-                                      GestureDetector(
-                                        onTap:
-                                            _isLoading || _roomCode.length < 6
-                                            ? null
-                                            : _handleJoin,
-                                        child: Opacity(
-                                          opacity: _roomCode.length == 6
-                                              ? 1.0
-                                              : 0.5,
-                                          child: AnimatedContainer(
-                                            duration: const Duration(
-                                              milliseconds: 300,
-                                            ),
-                                            width: double.infinity,
-                                            padding: const EdgeInsets.symmetric(
-                                              vertical: 16,
-                                            ),
-                                            decoration:
-                                                AppTheme.glowButtonDecoration,
-                                            child: _isLoading
-                                                ? const Center(
-                                                    child: SizedBox(
-                                                      width: 20,
-                                                      height: 20,
-                                                      child:
-                                                          CircularProgressIndicator(
-                                                            strokeWidth: 2,
-                                                            color: Colors.black,
-                                                          ),
-                                                    ),
-                                                  )
-                                                : Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Text(
-                                                        "ENTER ROOM",
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .labelLarge
-                                                            ?.copyWith(
-                                                              fontSize: 16,
-                                                              color:
-                                                                  Colors.black,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                            ),
-                                                      ),
-                                                      const SizedBox(width: 8),
-                                                      Image.asset(
-                                                        'assets/images/vector.png',
-                                                        height: 18,
-                                                        color: Colors.black,
-                                                        errorBuilder:
-                                                            (
-                                                              c,
-                                                              e,
-                                                              s,
-                                                            ) => const Icon(
-                                                              Icons
-                                                                  .arrow_forward_rounded,
-                                                              color:
-                                                                  Colors.black,
-                                                              size: 20,
-                                                            ),
-                                                      ),
-                                                    ],
+                                GestureDetector(
+                                  behavior: HitTestBehavior.opaque,
+                                  onTap: () {
+                                    FocusScope.of(
+                                      context,
+                                    ).requestFocus(_roomCodeFocusNode);
+                                  },
+                                  child: AppCard(
+                                    child: Column(
+                                      children: [
+                                        RoomCodeInput(
+                                          focusNode: _roomCodeFocusNode,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              _roomCode = value;
+                                            });
+                                          },
+                                          onCompleted: (value) {
+                                            setState(() {
+                                              _roomCode = value;
+                                            });
+                                            _handleJoin();
+                                          },
+                                        ),
+                                        const SizedBox(height: 24),
+                                        GestureDetector(
+                                          onTap:
+                                              _isLoading || _roomCode.length < 6
+                                              ? null
+                                              : _handleJoin,
+                                          child: Opacity(
+                                            opacity: _roomCode.length == 6
+                                                ? 1.0
+                                                : 0.5,
+                                            child: AnimatedContainer(
+                                              duration: const Duration(
+                                                milliseconds: 300,
+                                              ),
+                                              width: double.infinity,
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                    vertical: 16,
                                                   ),
+                                              decoration:
+                                                  AppTheme.glowButtonDecoration,
+                                              child: _isLoading
+                                                  ? const Center(
+                                                      child: SizedBox(
+                                                        width: 20,
+                                                        height: 20,
+                                                        child:
+                                                            CircularProgressIndicator(
+                                                              strokeWidth: 2,
+                                                              color:
+                                                                  Colors.black,
+                                                            ),
+                                                      ),
+                                                    )
+                                                  : Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Text(
+                                                          "ENTER ROOM",
+                                                          style: Theme.of(context)
+                                                              .textTheme
+                                                              .labelLarge
+                                                              ?.copyWith(
+                                                                fontSize: 16,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                              ),
+                                                        ),
+                                                        const SizedBox(
+                                                          width: 8,
+                                                        ),
+                                                        Image.asset(
+                                                          'assets/images/vector.png',
+                                                          height: 18,
+                                                          color: Colors.black,
+                                                          errorBuilder:
+                                                              (
+                                                                c,
+                                                                e,
+                                                                s,
+                                                              ) => const Icon(
+                                                                Icons
+                                                                    .arrow_forward_rounded,
+                                                                color: Colors
+                                                                    .black,
+                                                                size: 20,
+                                                              ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
                                 const SizedBox(height: 24),

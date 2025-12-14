@@ -5,11 +5,13 @@ import '../theme/app_colors.dart';
 class RoomCodeInput extends StatefulWidget {
   final ValueChanged<String> onCompleted;
   final ValueChanged<String> onChanged;
+  final FocusNode? focusNode;
 
   const RoomCodeInput({
     super.key,
     required this.onCompleted,
     required this.onChanged,
+    this.focusNode,
   });
 
   @override
@@ -18,20 +20,25 @@ class RoomCodeInput extends StatefulWidget {
 
 class _RoomCodeInputState extends State<RoomCodeInput> {
   final TextEditingController _controller = TextEditingController();
-  final FocusNode _focusNode = FocusNode();
+  late FocusNode _focusNode;
 
   @override
   void dispose() {
     _controller.dispose();
-    _focusNode.dispose();
+    // Only dispose if created internally
+    if (widget.focusNode == null) {
+      _focusNode.dispose();
+    }
     super.dispose();
   }
 
   @override
   void initState() {
     super.initState();
+    _focusNode = widget.focusNode ?? FocusNode();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      FocusScope.of(context).requestFocus(_focusNode);
+      // Don't auto-focus
+      // FocusScope.of(context).requestFocus(_focusNode);
     });
   }
 
@@ -50,6 +57,8 @@ class _RoomCodeInputState extends State<RoomCodeInput> {
       },
       child: Container(
         color: Colors.transparent,
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(vertical: 20),
         child: Stack(
           alignment: Alignment.center,
           children: [
